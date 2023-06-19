@@ -1,0 +1,29 @@
+body {
+  padding: 0;
+  margin: 0;
+  background-color: burlywood;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  padding: 15px;
+  background-color: rgb(101, 151, 197);
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+section h2 {
+  margin: 0;
+}
+
+.post {
+  padding: 10px;
+}/*# sourceMappingURL=style.css.map */

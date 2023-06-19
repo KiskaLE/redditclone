@@ -1,0 +1,14 @@
+{block content}
+    <h2 n:block="title">{$post->title}</h2>
+    <p>{$post->content|truncate:256}</p>
+    <div>{$post->created_at|date:'F j, Y'}</div>
+    <p><a n:href="Home:default">zpět</a></p>
+    <p><a n:href="Edit:edit $post->id">edit</a></p>
+    {control commentForm}
+    <div n:foreach="$comments as $comment">
+        <h2>{$comment->name}</h2>
+        <p n:tag-if="$comment->email">{$comment->email}</p>
+        <p>{$comment->content}</p>
+    </div>
+
+{/block}
