@@ -10,7 +10,12 @@
 
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
+	<nav>
+			<a n:href=Home:>Home</a>
+			<a n:if="$user->isLoggedIn()" n:href=Sign:out>logout</a>
+			<a n:if="!$user->isLoggedIn()" n:href=Sign:in>login</a>
+		
+	</nav>
 	{include content}
 
 	{block scripts}
