@@ -1,6 +1,7 @@
 {
   "require": {
     "nette/database": "^3.0",
-    "tracy/tracy": "^2.10"
+    "tracy/tracy": "^2.10",
+    "nette/http": "^3.2"
   }
 }

@@ -4,11 +4,14 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\Passwords;
+use App\Modules\Authenticator;
 
-final class SignPresenter extends Nette\Application\UI\Presenter {
+final class SignPresenter extends BasePresenter {
+    public $session;
     public function __construct(
         private Nette\Database\Explorer $database,
         private Passwords $passwords,
+        private Authenticator $authenticator,
         ) {
         
     }
@@ -24,12 +27,13 @@ final class SignPresenter extends Nette\Application\UI\Presenter {
     }
 
     public function signInFormSucceeded(Form $form, \stdClass $data): void {
-        $passwords = new Passwords(PASSWORD_BCRYPT, ['cost' => 12]);
-        $user = $this->database->table("auth")->where("username", $data->username);
-        //$hash = $user->password;
-        // if ($passwords->verify($data->password, $hash)) {
-            
-        // };
+        try {
+	        $this->getUser()->setAuthenticator($this->authenticator)->login($data->username, $data->password);
+            $this->redirect("Home:");
+        } catch (Nette\Security\AuthenticationException $e) {
+	        $form->addError('incorect username or password');
+        }
+
 
     }
 
@@ -44,16 +48,13 @@ final class SignPresenter extends Nette\Application\UI\Presenter {
     }
 
     public function createFormSucceeded(Form $form, \stdClass $data): void {
-        try {
-            $passwords = new Passwords(PASSWORD_BCRYPT, ['cost' => 12]);
-            $hash = $passwords->hash($data->password);
-            $this->database->table("auth")->insert([
-                "username" => $data->username,
-                "password" => $hash,
-            ]);
-            $this->redirect("Home:");
-        } catch (Nette\Security\AuthenticationException $e) {
-            $form->addError("email already exists");
-        }
+            try {
+                $this->authenticator->createUser($data->username, $data->password);
+                $this->redirect("Home:");
+            } catch (\Throwable $th) {
+                $form->addError("Account already exists");
+            }
+        
+        
     }
 }

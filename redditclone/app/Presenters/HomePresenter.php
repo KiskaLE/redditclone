@@ -8,7 +8,7 @@ use Nette;
 use Nette\Application\UI\Form;
 
 
-final class HomePresenter extends Nette\Application\UI\Presenter
+final class HomePresenter extends BasePresenter
 {
     public function __construct( private Nette\Database\Explorer $database)
     {
@@ -17,6 +17,7 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 
     public function renderDefault(): void
     {
+
         $this->template->posts = $this->database
             ->table('posts')
             ->order('created_at DESC')
@@ -39,4 +40,6 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         ]);
         $this->redirect("Post:show", $post->id);
     }
+
+    
 }

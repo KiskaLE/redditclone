@@ -9,11 +9,18 @@
 </head>
 
 <body>
+
+
+
+
+
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 	<nav>
-			<a n:href=Home:>Home</a>
-			<a n:if="$user->isLoggedIn()" n:href=Sign:out>logout</a>
-			<a n:if="!$user->isLoggedIn()" n:href=Sign:in>login</a>
+			<p></p><a n:href=Home:>Home</a></p>
+			<p n:if="!$user->isLoggedIn()"><a  n:href=Sign:in>Login</a></p>
+			<p n:if="$user->isLoggedIn()"><a n:href=Sign:create>Signin</a></p>
+			<p n:if="$user->isLoggedIn()">{control logoutForm}</p>
+
 		
 	</nav>
 	{include content}
