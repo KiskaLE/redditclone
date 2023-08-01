@@ -41,7 +41,7 @@ final class SignPresenter extends BasePresenter {
         $form = new Form;
         $form->addText("username", "email")->setRequired(); 
         $form->addPassword("password", "password")->setRequired(); 
-        $form->addSubmit("submit", "login");
+        $form->addSubmit("submit", "create");
 
         $form->onSuccess[] = [$this, "createFormSucceeded"];
         return $form;
@@ -56,5 +56,18 @@ final class SignPresenter extends BasePresenter {
             }
         
         
+    }
+
+    public function createComponentLogoutForm(): Form {
+        $form = new Form;
+        $form->addSubmit("logout", "logout");
+        
+        $form->onSuccess[] = [$this, "logoutFormSucceeded"];
+        return $form;
+    }
+
+    public function logoutFormSucceeded() {
+        $this->user->logout();
+        $this->redirect("Home:");
     }
 }

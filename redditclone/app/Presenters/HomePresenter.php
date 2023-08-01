@@ -17,28 +17,12 @@ final class HomePresenter extends BasePresenter
 
     public function renderDefault(): void
     {
-
+        
+        $this->template->usernames = $this->database->table("auth");
         $this->template->posts = $this->database
             ->table('posts')
             ->order('created_at DESC')
             ->limit(5);
-    }
-
-    protected function createComponentPostForm(): Form {
-        $form = new Form;
-        $form->addText("title", "nadpis")->setRequired();
-        $form->addTextArea("content")->setRequired();
-        $form->addSubmit("submit", "publikovat");
-        $form->onSuccess[] = [$this, "postFormSucceeded"];
-        return $form;
-    }
-
-    public function postFormSucceeded(\stdClass $data): void {
-        $post = $this->database->table("posts")->insert([
-            "title" => $data->title,
-            "content" => $data->content,
-        ]);
-        $this->redirect("Post:show", $post->id);
     }
 
     

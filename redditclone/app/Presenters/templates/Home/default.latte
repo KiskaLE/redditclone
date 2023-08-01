@@ -1,16 +1,16 @@
 {block content}
-    {control postForm}
-    
-    <section n:foreach="$posts as $post">
-        <div class="post">
-            <a class="nostyle" n:href="Post:show $post->id">
-                <h2>{$post->title}</h2>
-                <div>{$post->content|truncate:256}</div>
-                <div class="date">{$post->created_at|date:'F j, Y'}</div>
-            </a>
-        </div>
-    </section>
-    
+<div class="posts">
+    <a n:foreach="$posts as $post" class="nostyle" n:href="Post:show $post->id">
+        <section class="post" >
+            
+            <div class="post-header">
+                    <p>u/{$usernames->get($post->author_id)->username} {$post->created_at|date:'F j, Y'}</p>
+                    <h2>{$post->title}</h2>
+            </div>
+            
+        </section>
+    </a>
+</div>
 
 {/block}
 

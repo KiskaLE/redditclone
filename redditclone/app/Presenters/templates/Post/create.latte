@@ -1,0 +1,8 @@
+{block content} 
+<h1>Create post</h1>
+{if $user->isLoggedIn()}
+    {control postForm}
+    
+{/if}
+
+{/block}

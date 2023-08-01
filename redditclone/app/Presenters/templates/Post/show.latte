@@ -1,14 +1,21 @@
 {block content}
-    <h2 n:block="title">{$post->title}</h2>
-    <p>{$post->content|truncate:256}</p>
-    <div>{$post->created_at|date:'F j, Y'}</div>
-    <p><a n:href="Home:default">zpět</a></p>
-    <p n:if="$user->isLoggedIn()"><a n:href="Edit:edit $post->id">edit</a></p>
-    {control commentForm}
-    <div n:foreach="$comments as $comment">
-        <h2>{$comment->name}</h2>
-        <p n:tag-if="$comment->email">{$comment->email}</p>
+    <section class="post">
+           <div class="post-header">
+                <p>u/{$usernames->get($post->author_id)->username} {$post->created_at|date:'F j, Y'}</p>
+                <h2>{$post->title}</h2>
+           </div>
+            <div class="post-content">
+                <p>{$post_content|noescape}</p>
+            </div>
+    </section>
+    {if $user->isLoggedIn()}
+        {control commentForm}
+    {/if}
+    <section class="comments">
+    <h2>Comments</h2>
+    <div n:foreach="$comments as $comment" class="comment">
+        <p>u/{$usernames->get($comment->author_id)->username}</p>
         <p>{$comment->content}</p>
-    </div>
-
+    </div></section>
+    
 {/block}
