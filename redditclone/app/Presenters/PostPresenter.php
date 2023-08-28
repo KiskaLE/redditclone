@@ -8,7 +8,8 @@ final class PostPresenter extends BasePresenter {
     public function __construct(
         private Nette\Database\Explorer $database
     ){  
-    }
+        parent::__construct($this->database);
+    }   
 
     public function renderShow(int $postId): void {
         $post = $this->database
@@ -16,21 +17,26 @@ final class PostPresenter extends BasePresenter {
             ->get($postId);
         if(!$post) {
             $this->error("stránka nebyla nalezena");
-        } 
+        }
+        
+        
         $this->template->post_content = str_replace("\n", "<br>", $post->content);
         $this->template->post = $post;
         $this->template->comments = $post->related("comments")->order("created_at DESC");
         $this->template->usernames = $this->database->table("auth");
-        
+        $this->template->numOfUpvotes = $this->getUpvotes($this->database,$postId, 1);
+        $this->template->commentsReactionsDatabase = $this->database;
         
             
     }
     
     protected function createComponentCommentForm(): Form {
         $form = new Form;
-        $form->addTextArea("content", "Komentář")
-            ->setRequired();
-        $form->addSubmit("send", "odeslat");
+        $form->addTextArea("content")
+            ->setRequired()
+            ->setHtmlAttribute("class", "comment-textarea")
+            ->setHtmlAttribute("placeholder", "What are your thoughts?");
+        $form->addSubmit("send", "Comment");
         $form->onSuccess[] = [$this, "commentFormSucceeded"];
         return $form;
     }
@@ -49,8 +55,8 @@ final class PostPresenter extends BasePresenter {
     
     protected function createComponentPostForm(): Form {
         $form = new Form;
-        $form->addText("title")->setRequired();
-        $form->addTextArea("content")->setRequired();
+        $form->addTextArea("title")->setRequired()->setHtmlAttribute("placeholder", "Title");
+        $form->addTextArea("content")->setRequired()->setHtmlAttribute("placeholder", "Text (optinal)");
         $form->addSubmit("submit", "publikovat");
         $form->onSuccess[] = [$this, "postFormSucceeded"];
         return $form;

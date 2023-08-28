@@ -26,3 +26,5 @@ const buttons = document.querySelectorAll("input[type='submit']");
 for (const button of buttons) {
   button.classList.add("button-submit");
 }
+
+const reactionsButtons = document.querySelectorAll(".reaction");

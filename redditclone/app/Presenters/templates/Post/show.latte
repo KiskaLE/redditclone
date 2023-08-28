@@ -7,15 +7,28 @@
             <div class="post-content">
                 <p>{$post_content|noescape}</p>
             </div>
+            <div class="rection">
+                <span class="reaction" onclick="reaction({$post->id}, 1, 1)">up</span> <span class="reaction">{$numOfUpvotes}</span> <span class="reaction" onclick="reaction({$post->id}, 0, 1)">down</span>
+            </div>
     </section>
+    <h2>Comments</h2>
     {if $user->isLoggedIn()}
         {control commentForm}
     {/if}
     <section class="comments">
-    <h2>Comments</h2>
     <div n:foreach="$comments as $comment" class="comment">
+        {php $up = $commentsReactionsDatabase->table("upvotes")->where("parent_id = ? AND value = ? AND type=?", [$comment->id,1,"2"])->count()}  
+        {php $down = $commentsReactionsDatabase->table("upvotes")->where("parent_id = ? AND value = ? AND type=?", [$comment->id,0,"2"])->count()}
+        {php $count = $up - $down}
+        
+        
         <p>u/{$usernames->get($comment->author_id)->username}</p>
         <p>{$comment->content}</p>
+        <div class="rection">
+                <span class="reaction" onclick="reaction({$comment->id}, 1, 2)">up</span> <span class="reaction"> 
+                {$count}
+                </span> <span class="reaction" onclick="reaction({$comment->id}, 0, 2)">down</span>
+        </div>
     </div></section>
     
 {/block}

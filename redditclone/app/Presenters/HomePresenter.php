@@ -21,8 +21,7 @@ final class HomePresenter extends BasePresenter
         $this->template->usernames = $this->database->table("auth");
         $this->template->posts = $this->database
             ->table('posts')
-            ->order('created_at DESC')
-            ->limit(5);
+            ->order('created_at DESC');
     }
 
     

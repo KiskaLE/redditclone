@@ -1,23 +1,19 @@
 html {
   --text-color: white;
+  --nav-height: 70px;
 }
 
 body {
   margin: 0;
-  margin-top: 70px;
+  margin-top: var(--nav-height);
   background-color: rgb(51, 51, 51);
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.logo img {
-  width: 34px;
+h1 {
+  color: var(--text-color);
 }
 
 form {
@@ -27,23 +23,31 @@ form {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  color: white;
+  color: var(--text-color);
 }
 form textarea {
   resize: none;
   width: 100%;
-  min-height: 30px;
-  background-color: inherit;
+  min-height: 100px;
+  background-color: #1a1a1b;
   border: none;
   box-sizing: border-box;
-  color: white;
+  color: var(--text-color);
+  border-radius: 5px;
+  border: 1px gray solid;
+  padding: 10px;
 }
-form input[type=text] {
-  width: 100%;
-  background-color: inherit;
+form textarea[name=title] {
+  width: 98%;
+  background-color: #1a1a1b;
   border: none;
-  color: white;
+  color: var(--text-color);
+  border-radius: 5px;
+  border: 1px gray solid;
   font-size: 1.5rem;
+  padding: 10px;
+  min-height: -moz-fit-content;
+  min-height: fit-content;
 }
 form table {
   width: 90%;
@@ -53,16 +57,13 @@ form tr {
   margin: 0;
   padding: 0;
 }
-form tr th {
-  visibility: hidden;
-}
 
 nav {
-  position: absolute;
-  overflow-x: hidden;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,8 +86,26 @@ nav ul {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+.comment-textarea {
+  min-height: 150px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo img {
+  width: 34px;
+}
+
 .button-submit {
-  background-color: white;
+  background-color: var(--text-color);
   color: black;
   border: 2px black solid;
   padding: 5px 10px;
@@ -97,7 +116,6 @@ nav ul {
 
 .menu {
   position: fixed;
-  overflow-x: hidden;
   left: 0;
   top: 0;
   margin: 0;
@@ -115,11 +133,6 @@ nav ul {
   width: 50vw;
   padding: 30px;
   text-transform: uppercase;
-}
-
-a {
-  text-decoration: none;
-  color: white;
 }
 
 .posts {
@@ -150,7 +163,7 @@ a {
 }
 
 .post-content {
-  color: white;
+  color: var(--text-color);
   overflow-wrap: break-word;
 }
 
@@ -168,4 +181,9 @@ a {
 
 .icon-white {
   filter: invert(100%) sepia(0%) saturate(100%) hue-rotate(0deg) brightness(1009%) contrast(100%);
+}
+
+.reaction {
+  color: var(--text-color);
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */

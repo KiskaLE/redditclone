@@ -14,18 +14,14 @@
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 		{* navbar *}
 	<nav>
-		<ul>
-			<li>
-				<div class="logo">
-					<img src="{$basePath}/icons/reddit-icon.ico" alt="Logo">
-					<a n:href=Home:>Home</a>
-				</div>
-			</li>
-		</ul>
+		<div class="logo">
+			<img src="{$basePath}/icons/reddit-icon.ico" alt="Logo">
+			<a n:href=Home:>Home</a>
+		</div>
+		<div n:if="$user->isLoggedIn()"><a n:href="Post:create"><img class="icon-white" src="{$basePath}/icons/create-post.svg" alt="create post" srcset=""></a></div>
 		<div id="hamburgerMenuOpen"><img class="icon-white" src="{$basePath}/icons/hamburgerMenu.svg" alt="open menu"></div>
 		<div id="menu" class="menu hidden">
 			<ul >
-				<li n:if="$user->isLoggedIn()"><a n:href="Post:create">create post</a></li>
 				<li n:if="!$user->isLoggedIn()"><a  n:href=Sign:in>Log in</a></li>
 				<li n:if="!$user->isLoggedIn()"><a n:href=Sign:create>Sign in</a></li>
 				<li n:if="$user->isLoggedIn()"><a n:href="Sign:out">Log out</a></li>
@@ -36,10 +32,31 @@
 	
 	{include content}
 
+	<form n:name="reactionForm" class="hidden">
+		<input id="reaction-parent" n:name="parent_id">
+		<input id="reaction-reaction" n:name="reaction">
+		<input id="reaction-type" n:name="type">
+		<input id="reaction-submit" n:name="submitReaction">
+		
+	</form>
+
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
 	<script defer type="module" src="{$basePath}/Scripts/index.js"></script>
 	{/block}
+
+	<script>
+		function reaction(parentId, reaction, type) {
+  			const formParent = document.getElementById("reaction-parent");
+			const formReaction = document.getElementById("reaction-reaction");
+			const formType = document.getElementById("reaction-type");
+			formParent.value = parentId;
+			formReaction.value = reaction;
+			formType.value = type;
+
+			document.getElementById("reaction-submit").click();
+}
+	</script>
 	
 </body>
 </html>
